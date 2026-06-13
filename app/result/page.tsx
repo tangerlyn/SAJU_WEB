@@ -322,10 +322,6 @@ export default function ResultPage() {
           )}
         </button>
 
-        {saveMsg && (
-          <p className="text-center text-sm text-white/50">{saveMsg}</p>
-        )}
-
         <button
           onClick={() => router.push('/')}
           className="w-full py-3.5 rounded-2xl bg-white/[0.03] border border-white/10 text-white/40 hover:bg-white/[0.07] hover:text-white/60 transition-all text-sm"
