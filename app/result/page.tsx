@@ -11,11 +11,11 @@ interface StoredResult {
 }
 
 const ELEMENT_COLORS: Record<string, string> = {
-  목: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30',
-  화: 'text-rose-400 bg-rose-400/10 border-rose-400/30',
-  토: 'text-amber-400 bg-amber-400/10 border-amber-400/30',
-  금: 'text-slate-300 bg-slate-300/10 border-slate-300/30',
-  수: 'text-sky-400 bg-sky-400/10 border-sky-400/30',
+  목: 'text-emerald-600 bg-emerald-50 border-emerald-300',
+  화: 'text-rose-600 bg-rose-50 border-rose-300',
+  토: 'text-amber-600 bg-amber-50 border-amber-300',
+  금: 'text-slate-600 bg-slate-50 border-slate-300',
+  수: 'text-sky-600 bg-sky-50 border-sky-300',
 }
 
 const ELEMENT_EMOJI: Record<string, string> = {
@@ -23,20 +23,20 @@ const ELEMENT_EMOJI: Record<string, string> = {
 }
 
 const SECTION_META = [
-  { icon: '🌊', label: '오행 분석',    gradient: 'from-sky-500/20 to-blue-600/20',       border: 'border-sky-500/30',    accent: 'text-sky-300' },
-  { icon: '⚡', label: '천간의 장점',  gradient: 'from-yellow-500/20 to-amber-600/20',   border: 'border-yellow-500/30', accent: 'text-yellow-300' },
-  { icon: '🔮', label: '천간의 단점',  gradient: 'from-purple-500/20 to-violet-600/20',  border: 'border-purple-500/30', accent: 'text-purple-300' },
-  { icon: '🌟', label: '일주의 의미',  gradient: 'from-amber-500/20 to-orange-600/20',   border: 'border-amber-500/30',  accent: 'text-amber-300' },
-  { icon: '🧬', label: '성격 분석',    gradient: 'from-indigo-500/20 to-purple-600/20',  border: 'border-indigo-500/30', accent: 'text-indigo-300' },
-  { icon: '💎', label: '숨겨진 재능',  gradient: 'from-teal-500/20 to-cyan-600/20',      border: 'border-teal-500/30',   accent: 'text-teal-300' },
-  { icon: '🚀', label: '직업 & 미래',  gradient: 'from-emerald-500/20 to-teal-600/20',   border: 'border-emerald-500/30',accent: 'text-emerald-300' },
-  { icon: '💰', label: '재물운',        gradient: 'from-green-500/20 to-emerald-600/20',  border: 'border-green-500/30',  accent: 'text-green-300' },
-  { icon: '💕', label: '연애/결혼운',  gradient: 'from-pink-500/20 to-rose-600/20',      border: 'border-pink-500/30',   accent: 'text-pink-300' },
-  { icon: '🌿', label: '건강운',        gradient: 'from-lime-500/20 to-green-600/20',     border: 'border-lime-500/30',   accent: 'text-lime-300' },
-  { icon: '🏡', label: '가족운',        gradient: 'from-orange-500/20 to-amber-600/20',   border: 'border-orange-500/30', accent: 'text-orange-300' },
-  { icon: '🤝', label: '인맥/인복',    gradient: 'from-cyan-500/20 to-sky-600/20',       border: 'border-cyan-500/30',   accent: 'text-cyan-300' },
-  { icon: '📅', label: '올해 운세',    gradient: 'from-rose-500/20 to-pink-600/20',      border: 'border-rose-500/30',   accent: 'text-rose-300' },
-  { icon: '🌈', label: '종합 조언',    gradient: 'from-violet-500/20 to-fuchsia-600/20', border: 'border-violet-500/30', accent: 'text-violet-300' },
+  { icon: '🌊', label: '오행 분석',    gradient: 'from-sky-50 to-blue-50',         border: 'border-sky-200',    accent: 'text-sky-600' },
+  { icon: '⚡', label: '천간의 장점',  gradient: 'from-yellow-50 to-amber-50',     border: 'border-yellow-200', accent: 'text-amber-600' },
+  { icon: '🔮', label: '천간의 단점',  gradient: 'from-purple-50 to-violet-50',    border: 'border-purple-200', accent: 'text-purple-600' },
+  { icon: '🌟', label: '일주의 의미',  gradient: 'from-amber-50 to-orange-50',     border: 'border-amber-200',  accent: 'text-amber-600' },
+  { icon: '🧬', label: '성격 분석',    gradient: 'from-indigo-50 to-purple-50',    border: 'border-indigo-200', accent: 'text-indigo-600' },
+  { icon: '💎', label: '숨겨진 재능',  gradient: 'from-teal-50 to-cyan-50',        border: 'border-teal-200',   accent: 'text-teal-600' },
+  { icon: '🚀', label: '직업 & 미래',  gradient: 'from-emerald-50 to-teal-50',     border: 'border-emerald-200',accent: 'text-emerald-600' },
+  { icon: '💰', label: '재물운',        gradient: 'from-green-50 to-emerald-50',    border: 'border-green-200',  accent: 'text-green-600' },
+  { icon: '💕', label: '연애/결혼운',  gradient: 'from-pink-50 to-rose-50',        border: 'border-pink-200',   accent: 'text-pink-600' },
+  { icon: '🌿', label: '건강운',        gradient: 'from-lime-50 to-green-50',       border: 'border-lime-200',   accent: 'text-lime-600' },
+  { icon: '🏡', label: '가족운',        gradient: 'from-orange-50 to-amber-50',     border: 'border-orange-200', accent: 'text-orange-600' },
+  { icon: '🤝', label: '인맥/인복',    gradient: 'from-cyan-50 to-sky-50',         border: 'border-cyan-200',   accent: 'text-cyan-600' },
+  { icon: '📅', label: '올해 운세',    gradient: 'from-rose-50 to-pink-50',        border: 'border-rose-200',   accent: 'text-rose-600' },
+  { icon: '🌈', label: '종합 조언',    gradient: 'from-violet-50 to-fuchsia-50',   border: 'border-violet-200', accent: 'text-violet-600' },
 ]
 
 function parseSections(reading: string): { title: string; body: string }[] {
@@ -64,10 +64,10 @@ function SectionBody({ text }: { text: string }) {
       {lines.map((line, i) => {
         const parts = line.split(/(\*\*.+?\*\*)/)
         return (
-          <p key={i} className="text-white/80 leading-relaxed text-[15px]">
+          <p key={i} className="text-gray-700 leading-relaxed text-[15px]">
             {parts.map((p, j) =>
               p.startsWith('**') && p.endsWith('**')
-                ? <strong key={j} className="text-white font-semibold">{p.slice(2, -2)}</strong>
+                ? <strong key={j} className="text-gray-900 font-semibold">{p.slice(2, -2)}</strong>
                 : p
             )}
           </p>
@@ -85,7 +85,7 @@ function SectionCard({ sec, i }: { sec: { title: string; body: string }; i: numb
         <span className="text-2xl">{meta.icon}</span>
         <p className={`font-bold text-base ${meta.accent}`}>{sec.title}</p>
       </div>
-      <div className="h-px mx-5 bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4" />
+      <div className={`h-px mx-5 ${meta.border} opacity-50 mb-4`} />
       <div className="px-5 pb-5">
         <SectionBody text={sec.body} />
       </div>
@@ -114,7 +114,7 @@ export default function ResultPage() {
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
       const dataUrl = await toPng(captureRef.current, {
         cacheBust: true,
-        backgroundColor: '#0a0a0f',
+        backgroundColor: '#fff7f8',
         pixelRatio: isIOS ? 1.5 : 2,
       })
 
@@ -138,8 +138,8 @@ export default function ResultPage() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-pink-400/30 border-t-pink-400 rounded-full animate-spin" />
+      <div className="min-h-screen bg-pink-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-pink-300 border-t-pink-500 rounded-full animate-spin" />
       </div>
     )
   }
@@ -154,20 +154,20 @@ export default function ResultPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] text-white">
+    <main className="min-h-screen bg-gradient-to-b from-pink-50 via-rose-50 to-white text-gray-900">
 
       {/* iOS 이미지 저장 모달 */}
       {modalImages.length > 0 && (
-        <div className="fixed inset-0 bg-black/95 z-50 overflow-y-auto">
+        <div className="fixed inset-0 bg-white/98 z-50 overflow-y-auto">
           <div className="max-w-lg mx-auto px-4 py-8">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <p className="text-white font-bold text-lg">이미지 저장</p>
-                <p className="text-white/50 text-sm mt-0.5">이미지를 길게 눌러 사진 저장 📱</p>
+                <p className="text-gray-800 font-bold text-lg">이미지 저장</p>
+                <p className="text-gray-500 text-sm mt-0.5">이미지를 길게 눌러 사진 저장 📱</p>
               </div>
               <button
                 onClick={() => setModalImages([])}
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-white/20"
+                className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 hover:bg-pink-200"
               >
                 ✕
               </button>
@@ -176,13 +176,13 @@ export default function ResultPage() {
               {modalImages.map((src, i) => (
                 <div key={i}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="사주 풀이" className="w-full rounded-2xl" />
+                  <img src={src} alt="사주 풀이" className="w-full rounded-2xl border border-pink-100" />
                 </div>
               ))}
             </div>
             <button
               onClick={() => setModalImages([])}
-              className="w-full mt-6 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-white/60 text-sm"
+              className="w-full mt-6 py-3.5 rounded-2xl bg-pink-50 border border-pink-200 text-gray-500 text-sm hover:bg-pink-100"
             >
               닫기
             </button>
@@ -191,50 +191,50 @@ export default function ResultPage() {
       )}
 
       {/* ───── 캡처 영역 (전체 결과) ───── */}
-      <div ref={captureRef} className="bg-[#0a0a0f]">
+      <div ref={captureRef} className="bg-gradient-to-b from-pink-50 via-rose-50 to-white">
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-pink-950/60 via-rose-950/40 to-transparent pointer-events-none" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-pink-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-pink-200/40 via-rose-100/30 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-pink-300/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-2xl mx-auto px-4 pt-10 pb-6">
             <button
               onClick={() => router.push('/')}
-              className="mb-6 text-white/40 hover:text-white/70 flex items-center gap-2 text-sm transition-colors"
+              className="mb-6 text-gray-400 hover:text-gray-600 flex items-center gap-2 text-sm transition-colors"
             >
               ← 다시 보기
             </button>
 
             <div className="text-center mb-8">
-              <p className="text-white/40 text-sm mb-1">
+              <p className="text-gray-500 text-sm mb-1">
                 {saju.birthInfo.year}.{saju.birthInfo.month}.{saju.birthInfo.day} ·{' '}
                 {saju.birthInfo.gender === 'male' ? '남' : '여'}
               </p>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-300 via-rose-300 to-amber-300 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">
                 {saju.ilju}
               </h1>
-              <p className="text-white/40 text-sm mt-1">일간 {saju.dayGan} · {saju.day.ganElement}의 기운</p>
+              <p className="text-gray-500 text-sm mt-1">일간 {saju.dayGan} · {saju.day.ganElement}의 기운</p>
             </div>
 
             {/* 사주팔자 카드 */}
-            <div className="bg-white/[0.04] backdrop-blur-xl rounded-3xl p-5 border border-white/10 mb-4">
-              <p className="text-center text-xs text-white/30 mb-4 tracking-widest uppercase">四柱八字</p>
+            <div className="bg-white rounded-3xl p-5 border border-pink-200 shadow-sm mb-4">
+              <p className="text-center text-xs text-gray-400 mb-4 tracking-widest uppercase">四柱八字</p>
               <div className="grid grid-cols-4 gap-2 mb-5">
                 {pillars.map((p) => (
                   <div key={p.label} className="text-center">
-                    <p className="text-[10px] text-white/30 mb-2 tracking-wider">{p.label}</p>
+                    <p className="text-[10px] text-gray-400 mb-2 tracking-wider">{p.label}</p>
                     <div className={`rounded-2xl border py-3 mb-1.5 ${ELEMENT_COLORS[p.ganEl]}`}>
                       <div className="text-2xl font-bold">{p.gan}</div>
-                      <div className="text-[10px] opacity-60 mt-0.5">{p.ganEl}</div>
+                      <div className="text-[10px] opacity-70 mt-0.5">{p.ganEl}</div>
                     </div>
                     <div className={`rounded-2xl border py-3 ${ELEMENT_COLORS[p.jiEl]}`}>
                       <div className="text-2xl font-bold">{p.ji}</div>
-                      <div className="text-[10px] opacity-60 mt-0.5">{p.jiEl}</div>
+                      <div className="text-[10px] opacity-70 mt-0.5">{p.jiEl}</div>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-white/10 pt-4">
-                <p className="text-[10px] text-white/30 text-center mb-3 tracking-widest">오행 분포</p>
+              <div className="border-t border-pink-100 pt-4">
+                <p className="text-[10px] text-gray-400 text-center mb-3 tracking-widest">오행 분포</p>
                 <div className="flex gap-1.5 justify-center flex-wrap">
                   {Object.entries(saju.fiveElements).map(([el, cnt]) => (
                     <div key={el} className={`flex items-center gap-1 rounded-full px-3 py-1 border text-xs font-medium ${ELEMENT_COLORS[el]}`}>
@@ -244,7 +244,7 @@ export default function ResultPage() {
                     </div>
                   ))}
                 </div>
-                <p className="text-center text-[11px] text-white/25 mt-2.5">
+                <p className="text-center text-[11px] text-gray-400 mt-2.5">
                   강한 기운 {saju.dominantElement} · 필요한 기운 {saju.lackingElement}
                 </p>
               </div>
@@ -265,11 +265,11 @@ export default function ResultPage() {
         <button
           onClick={handleSaveImages}
           disabled={saving}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-600/40 to-rose-600/40 border border-pink-500/40 text-white font-semibold hover:from-pink-600/60 hover:to-rose-600/60 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 border border-pink-300 text-white font-semibold disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-sm shadow-pink-200"
         >
           {saving ? (
             <>
-              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin" />
               이미지 생성 중...
             </>
           ) : (
@@ -279,7 +279,7 @@ export default function ResultPage() {
 
         <button
           onClick={() => router.push('/')}
-          className="w-full py-3.5 rounded-2xl bg-white/[0.03] border border-white/10 text-white/40 hover:bg-white/[0.07] hover:text-white/60 transition-all text-sm"
+          className="w-full py-3.5 rounded-2xl bg-white border border-pink-200 text-gray-500 hover:bg-pink-50 hover:text-gray-700 transition-all text-sm"
         >
           다른 사람 사주 보기
         </button>

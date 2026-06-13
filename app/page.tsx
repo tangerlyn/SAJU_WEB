@@ -59,47 +59,47 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-pink-950 via-rose-950 to-black text-white">
+    <main className="min-h-screen bg-gradient-to-b from-pink-100 via-rose-50 to-white text-gray-900">
       <div className="max-w-lg mx-auto px-4 py-16">
         {/* 헤더 */}
         <div className="text-center mb-12">
           <div className="text-5xl mb-4">☯</div>
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-yellow-300 to-amber-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">
             사.주.팔.자.
           </h1>
-          <p className="text-pink-300 text-lg">생년월일로 알아보는 나의 운명은?!?</p>
+          <p className="text-pink-500 text-lg">생년월일로 알아보는 나의 운명은?!?</p>
         </div>
 
         {/* 폼 */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="bg-white/5 backdrop-blur rounded-2xl p-6 space-y-5 border border-white/10">
+          <div className="bg-white rounded-2xl p-6 space-y-5 border border-pink-200 shadow-sm">
 
             {/* 이름 */}
             <div>
-              <label className="block text-sm text-pink-300 mb-2">이름</label>
+              <label className="block text-sm text-pink-500 mb-2 font-medium">이름</label>
               <input
                 type="text"
                 placeholder="이름을 입력하세요"
                 value={form.name}
                 onChange={e => setForm({ ...form, name: e.target.value })}
                 required
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
+                className="w-full bg-pink-50 border border-pink-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
               />
             </div>
 
             {/* 성별 */}
             <div>
-              <label className="block text-sm text-pink-300 mb-2">성별</label>
+              <label className="block text-sm text-pink-500 mb-2 font-medium">성별</label>
               <div className="grid grid-cols-2 gap-3">
                 {[{ value: 'male', label: '남성' }, { value: 'female', label: '여성' }].map(g => (
                   <button
                     key={g.value}
                     type="button"
                     onClick={() => setForm({ ...form, gender: g.value })}
-                    className={`py-3 rounded-xl border transition-all ${
+                    className={`py-3 rounded-xl border transition-all font-medium ${
                       form.gender === g.value
-                        ? 'bg-pink-600 border-pink-400 text-white'
-                        : 'bg-white/5 border-white/20 text-white/60 hover:border-white/40'
+                        ? 'bg-pink-500 border-pink-400 text-white shadow-sm'
+                        : 'bg-white border-pink-200 text-gray-600 hover:border-pink-300'
                     }`}
                   >
                     {g.label}
@@ -110,7 +110,7 @@ export default function Home() {
 
             {/* 생년 */}
             <div>
-              <label className="block text-sm text-pink-300 mb-2">태어난 해</label>
+              <label className="block text-sm text-pink-500 mb-2 font-medium">태어난 해</label>
               <input
                 type="number"
                 placeholder="예: 1990"
@@ -119,14 +119,14 @@ export default function Home() {
                 value={form.year}
                 onChange={e => setForm({ ...form, year: e.target.value })}
                 required
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
+                className="w-full bg-pink-50 border border-pink-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
               />
             </div>
 
             {/* 생월/일 */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm text-pink-300 mb-2">월</label>
+                <label className="block text-sm text-pink-500 mb-2 font-medium">월</label>
                 <input
                   type="number"
                   placeholder="월 (1-12)"
@@ -135,11 +135,11 @@ export default function Home() {
                   value={form.month}
                   onChange={e => setForm({ ...form, month: e.target.value })}
                   required
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
+                  className="w-full bg-pink-50 border border-pink-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
                 />
               </div>
               <div>
-                <label className="block text-sm text-pink-300 mb-2">일</label>
+                <label className="block text-sm text-pink-500 mb-2 font-medium">일</label>
                 <input
                   type="number"
                   placeholder="일 (1-31)"
@@ -148,7 +148,7 @@ export default function Home() {
                   value={form.day}
                   onChange={e => setForm({ ...form, day: e.target.value })}
                   required
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
+                  className="w-full bg-pink-50 border border-pink-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
                 />
               </div>
             </div>
@@ -156,13 +156,13 @@ export default function Home() {
             {/* 태어난 시간 */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-sm text-pink-300">태어난 시간</label>
-                <label className="flex items-center gap-2 text-sm text-white/50 cursor-pointer">
+                <label className="text-sm text-pink-500 font-medium">태어난 시간</label>
+                <label className="flex items-center gap-2 text-sm text-gray-500 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={form.unknownHour}
                     onChange={e => setForm({ ...form, unknownHour: e.target.checked })}
-                    className="rounded"
+                    className="rounded accent-pink-500"
                   />
                   모름
                 </label>
@@ -171,10 +171,10 @@ export default function Home() {
                 value={form.hour}
                 onChange={e => setForm({ ...form, hour: e.target.value })}
                 disabled={form.unknownHour}
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-400 disabled:opacity-40"
+                className="w-full bg-pink-50 border border-pink-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:border-pink-400 disabled:opacity-40"
               >
                 {hours.map(h => (
-                  <option key={h.value} value={h.value} className="bg-gray-900">
+                  <option key={h.value} value={h.value} className="bg-white text-gray-800">
                     {h.label}
                   </option>
                 ))}
@@ -186,11 +186,11 @@ export default function Home() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg transition-all shadow-lg shadow-pink-900/50"
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg text-white transition-all shadow-lg shadow-pink-200"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-3">
-                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />
                 {loadingMsg}
               </span>
             ) : (
@@ -199,7 +199,7 @@ export default function Home() {
           </button>
         </form>
 
-        <p className="text-center text-white/30 text-xs mt-6">
+        <p className="text-center text-gray-400 text-xs mt-6">
           시간을 모르면 정오(12시)로 계산됩니다
         </p>
       </div>
