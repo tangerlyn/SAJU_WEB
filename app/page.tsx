@@ -8,6 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [loadingMsg, setLoadingMsg] = useState('사주 분석 중...')
   const [careerLoading, setCareerLoading] = useState(false)
+  const [careerMsg, setCareerMsg] = useState('직장운 분석 중...')
   const [form, setForm] = useState({
     name: '',
     year: '',
@@ -193,6 +194,9 @@ export default function Home() {
                 return
               }
               setCareerLoading(true)
+              setCareerMsg('직장운 분석 중...')
+              const t1 = setTimeout(() => setCareerMsg('언니만을 위한 직장운 분석 중입니다 🔍'), 8000)
+              const t2 = setTimeout(() => setCareerMsg('돈 많이 벌었으면 좋겠다 💸'), 20000)
               try {
                 const res = await fetch('/api/career', {
                   method: 'POST',
@@ -213,7 +217,10 @@ export default function Home() {
               } catch {
                 alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
               } finally {
+                clearTimeout(t1)
+                clearTimeout(t2)
                 setCareerLoading(false)
+                setCareerMsg('직장운 분석 중...')
               }
             }}
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg text-white transition-all shadow-lg shadow-emerald-200"
@@ -221,7 +228,7 @@ export default function Home() {
             {careerLoading ? (
               <span className="flex items-center justify-center gap-3">
                 <span className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />
-                직장운 분석 중...
+                {careerMsg}
               </span>
             ) : (
               '💼 직장운만 보기'
