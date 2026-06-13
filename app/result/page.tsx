@@ -31,7 +31,7 @@ const SECTION_META = [
   { icon: '💎', label: '숨겨진 재능',  gradient: 'from-teal-50 to-cyan-50',        border: 'border-teal-200',   accent: 'text-teal-600' },
   { icon: '🚀', label: '직업 & 미래',  gradient: 'from-emerald-50 to-teal-50',     border: 'border-emerald-200',accent: 'text-emerald-600' },
   { icon: '💰', label: '재물운',        gradient: 'from-green-50 to-emerald-50',    border: 'border-green-200',  accent: 'text-green-600' },
-  { icon: '💕', label: '연애/결혼운',  gradient: 'from-pink-50 to-rose-50',        border: 'border-pink-200',   accent: 'text-pink-600' },
+  { icon: '💕', label: '연애/결혼운',  gradient: 'from-pink-50 to-rose-50',        border: 'border-blue-200',   accent: 'text-pink-600' },
   { icon: '🌿', label: '건강운',        gradient: 'from-lime-50 to-green-50',       border: 'border-lime-200',   accent: 'text-lime-600' },
   { icon: '🏡', label: '가족운',        gradient: 'from-orange-50 to-amber-50',     border: 'border-orange-200', accent: 'text-orange-600' },
   { icon: '🤝', label: '인맥/인복',    gradient: 'from-cyan-50 to-sky-50',         border: 'border-cyan-200',   accent: 'text-cyan-600' },
@@ -114,7 +114,7 @@ export default function ResultPage() {
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
       const dataUrl = await toPng(captureRef.current, {
         cacheBust: true,
-        backgroundColor: '#fff7f8',
+        backgroundColor: '#f0f7ff',
         pixelRatio: isIOS ? 1.5 : 2,
       })
 
@@ -138,8 +138,8 @@ export default function ResultPage() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-pink-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-pink-300 border-t-pink-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-blue-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-blue-300 border-t-blue-500 rounded-full animate-spin" />
       </div>
     )
   }
@@ -154,7 +154,7 @@ export default function ResultPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-pink-50 via-rose-50 to-white text-gray-900">
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 via-sky-50 to-white text-gray-900">
 
       {/* iOS 이미지 저장 모달 */}
       {modalImages.length > 0 && (
@@ -167,7 +167,7 @@ export default function ResultPage() {
               </div>
               <button
                 onClick={() => setModalImages([])}
-                className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 hover:bg-pink-200"
+                className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 hover:bg-blue-200"
               >
                 ✕
               </button>
@@ -176,13 +176,13 @@ export default function ResultPage() {
               {modalImages.map((src, i) => (
                 <div key={i}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="사주 풀이" className="w-full rounded-2xl border border-pink-100" />
+                  <img src={src} alt="사주 풀이" className="w-full rounded-2xl border border-blue-100" />
                 </div>
               ))}
             </div>
             <button
               onClick={() => setModalImages([])}
-              className="w-full mt-6 py-3.5 rounded-2xl bg-pink-50 border border-pink-200 text-gray-500 text-sm hover:bg-pink-100"
+              className="w-full mt-6 py-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-gray-500 text-sm hover:bg-blue-100"
             >
               닫기
             </button>
@@ -191,10 +191,10 @@ export default function ResultPage() {
       )}
 
       {/* ───── 캡처 영역 (전체 결과) ───── */}
-      <div ref={captureRef} className="bg-gradient-to-b from-pink-50 via-rose-50 to-white">
+      <div ref={captureRef} className="bg-gradient-to-b from-blue-50 via-sky-50 to-white">
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-pink-200/40 via-rose-100/30 to-transparent pointer-events-none" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-pink-300/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-200/40 via-sky-100/30 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-300/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-2xl mx-auto px-4 pt-10 pb-6">
             <button
@@ -209,14 +209,14 @@ export default function ResultPage() {
                 {saju.birthInfo.year}.{saju.birthInfo.month}.{saju.birthInfo.day} ·{' '}
                 {saju.birthInfo.gender === 'male' ? '남' : '여'}
               </p>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 bg-clip-text text-transparent">
                 {saju.ilju}
               </h1>
               <p className="text-gray-500 text-sm mt-1">일간 {saju.dayGan} · {saju.day.ganElement}의 기운</p>
             </div>
 
             {/* 사주팔자 카드 */}
-            <div className="bg-white rounded-3xl p-5 border border-pink-200 shadow-sm mb-4">
+            <div className="bg-white rounded-3xl p-5 border border-blue-200 shadow-sm mb-4">
               <p className="text-center text-xs text-gray-400 mb-4 tracking-widest uppercase">四柱八字</p>
               <div className="grid grid-cols-4 gap-2 mb-5">
                 {pillars.map((p) => (
@@ -233,7 +233,7 @@ export default function ResultPage() {
                   </div>
                 ))}
               </div>
-              <div className="border-t border-pink-100 pt-4">
+              <div className="border-t border-blue-100 pt-4">
                 <p className="text-[10px] text-gray-400 text-center mb-3 tracking-widest">오행 분포</p>
                 <div className="flex gap-1.5 justify-center flex-wrap">
                   {Object.entries(saju.fiveElements).map(([el, cnt]) => (
@@ -265,7 +265,7 @@ export default function ResultPage() {
         <button
           onClick={handleSaveImages}
           disabled={saving}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 border border-pink-300 text-white font-semibold disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-sm shadow-pink-200"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 border border-blue-300 text-white font-semibold disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-sm shadow-blue-200"
         >
           {saving ? (
             <>
@@ -279,7 +279,7 @@ export default function ResultPage() {
 
         <button
           onClick={() => router.push('/')}
-          className="w-full py-3.5 rounded-2xl bg-white border border-pink-200 text-gray-500 hover:bg-pink-50 hover:text-gray-700 transition-all text-sm"
+          className="w-full py-3.5 rounded-2xl bg-white border border-blue-200 text-gray-500 hover:bg-blue-50 hover:text-gray-700 transition-all text-sm"
         >
           다른 사람 사주 보기
         </button>
