@@ -39,13 +39,6 @@ const SECTION_META = [
   { icon: '🌈', label: '종합 조언',    gradient: 'from-violet-500/20 to-fuchsia-600/20', border: 'border-violet-500/30', accent: 'text-violet-300' },
 ]
 
-// 3개 이미지로 나누는 구간 [시작, 끝) — 섹션 배열 인덱스 기준
-const ZONES = [
-  { label: '1', range: [0, 4] as [number, number] },   // 섹션 1~4  (차트 포함)
-  { label: '2', range: [4, 9] as [number, number] },   // 섹션 5~9
-  { label: '3', range: [9, 14] as [number, number] },  // 섹션 10~14
-]
-
 function parseSections(reading: string): { title: string; body: string }[] {
   const parts = reading.split(/(?=\*\*\d+\.|###\s*\d+\.)/)
   const sections: { title: string; body: string }[] = []
@@ -106,12 +99,7 @@ export default function ResultPage() {
   const [saving, setSaving] = useState(false)
   const [modalImages, setModalImages] = useState<string[]>([])
 
-  // 3구역 ref
-  const zoneRefs = [
-    useRef<HTMLDivElement>(null),
-    useRef<HTMLDivElement>(null),
-    useRef<HTMLDivElement>(null),
-  ]
+  const captureRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const stored = sessionStorage.getItem('sajuResult')
@@ -120,36 +108,25 @@ export default function ResultPage() {
   }, [router])
 
   async function handleSaveImages() {
-    if (!result) return
+    if (!result || !captureRef.current) return
     setSaving(true)
     try {
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-      const images: string[] = []
-
-      for (const ref of zoneRefs) {
-        if (!ref.current) continue
-        const dataUrl = await toPng(ref.current, {
-          cacheBust: true,
-          backgroundColor: '#0a0a0f',
-          pixelRatio: isIOS ? 1.5 : 2,
-        })
-        images.push(dataUrl)
-      }
+      const dataUrl = await toPng(captureRef.current, {
+        cacheBust: true,
+        backgroundColor: '#0a0a0f',
+        pixelRatio: isIOS ? 1.5 : 2,
+      })
 
       if (isIOS) {
-        // iOS: 팝업 차단 우회 — 같은 페이지 모달에 이미지 표시
-        setModalImages(images)
+        setModalImages([dataUrl])
       } else {
-        // Android / 데스크탑: 자동 다운로드
         const ilju = result.saju.ilju
         const date = new Date().toLocaleDateString('ko-KR').replace(/\. /g, '-').replace('.', '')
-        for (let i = 0; i < images.length; i++) {
-          const link = document.createElement('a')
-          link.download = `사주_${ilju}_${i + 1}of3_${date}.png`
-          link.href = images[i]
-          link.click()
-          if (i < images.length - 1) await new Promise(r => setTimeout(r, 400))
-        }
+        const link = document.createElement('a')
+        link.download = `사주_${ilju}_${date}.png`
+        link.href = dataUrl
+        link.click()
       }
     } catch (err) {
       console.error(err)
@@ -162,7 +139,7 @@ export default function ResultPage() {
   if (!result) {
     return (
       <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-pink-400/30 border-t-pink-400 rounded-full animate-spin" />
       </div>
     )
   }
@@ -198,9 +175,8 @@ export default function ResultPage() {
             <div className="space-y-4">
               {modalImages.map((src, i) => (
                 <div key={i}>
-                  <p className="text-white/30 text-xs mb-2 text-center">{i + 1} / {modalImages.length}</p>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt={`사주 ${i + 1}`} className="w-full rounded-2xl" />
+                  <img src={src} alt="사주 풀이" className="w-full rounded-2xl" />
                 </div>
               ))}
             </div>
@@ -214,11 +190,11 @@ export default function ResultPage() {
         </div>
       )}
 
-      {/* ───── 구역 1: 차트 + 섹션 1~4 ───── */}
-      <div ref={zoneRefs[0]} className="bg-[#0a0a0f]">
+      {/* ───── 캡처 영역 (전체 결과) ───── */}
+      <div ref={captureRef} className="bg-[#0a0a0f]">
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-950/60 via-indigo-950/40 to-transparent pointer-events-none" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-pink-950/60 via-rose-950/40 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-pink-600/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-2xl mx-auto px-4 pt-10 pb-6">
             <button
@@ -233,7 +209,7 @@ export default function ResultPage() {
                 {saju.birthInfo.year}.{saju.birthInfo.month}.{saju.birthInfo.day} ·{' '}
                 {saju.birthInfo.gender === 'male' ? '남' : '여'}
               </p>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-amber-300 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-300 via-rose-300 to-amber-300 bg-clip-text text-transparent">
                 {saju.ilju}
               </h1>
               <p className="text-white/40 text-sm mt-1">일간 {saju.dayGan} · {saju.day.ganElement}의 기운</p>
@@ -276,31 +252,10 @@ export default function ResultPage() {
           </div>
         </div>
 
-        {/* 섹션 1~4 */}
-        <div className="max-w-2xl mx-auto px-4 pb-6 space-y-3">
-          {sections.slice(ZONES[0].range[0], ZONES[0].range[1]).map((sec, i) => (
-            <SectionCard key={i} sec={sec} i={ZONES[0].range[0] + i} />
-          ))}
-        </div>
-      </div>
-
-      {/* ───── 구역 2: 섹션 5~9 ───── */}
-      <div ref={zoneRefs[1]} className="bg-[#0a0a0f]">
-        <div className="max-w-2xl mx-auto px-4 py-6 space-y-3">
-          {/* 구역 상단 워터마크 */}
-          <p className="text-center text-xs text-white/15 pb-1">✦ 사주팔자 풀이 2/3 ✦</p>
-          {sections.slice(ZONES[1].range[0], ZONES[1].range[1]).map((sec, i) => (
-            <SectionCard key={i} sec={sec} i={ZONES[1].range[0] + i} />
-          ))}
-        </div>
-      </div>
-
-      {/* ───── 구역 3: 섹션 10~14 ───── */}
-      <div ref={zoneRefs[2]} className="bg-[#0a0a0f]">
-        <div className="max-w-2xl mx-auto px-4 py-6 space-y-3">
-          <p className="text-center text-xs text-white/15 pb-1">✦ 사주팔자 풀이 3/3 ✦</p>
-          {sections.slice(ZONES[2].range[0], ZONES[2].range[1]).map((sec, i) => (
-            <SectionCard key={i} sec={sec} i={ZONES[2].range[0] + i} />
+        {/* 전체 섹션 1~14 */}
+        <div className="max-w-2xl mx-auto px-4 pb-10 space-y-3">
+          {sections.map((sec, i) => (
+            <SectionCard key={i} sec={sec} i={i} />
           ))}
         </div>
       </div>
@@ -310,7 +265,7 @@ export default function ResultPage() {
         <button
           onClick={handleSaveImages}
           disabled={saving}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600/40 to-indigo-600/40 border border-purple-500/40 text-white font-semibold hover:from-purple-600/60 hover:to-indigo-600/60 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-600/40 to-rose-600/40 border border-pink-500/40 text-white font-semibold hover:from-pink-600/60 hover:to-rose-600/60 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
         >
           {saving ? (
             <>

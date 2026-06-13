@@ -59,15 +59,15 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black text-white">
+    <main className="min-h-screen bg-gradient-to-b from-pink-950 via-rose-950 to-black text-white">
       <div className="max-w-lg mx-auto px-4 py-16">
         {/* 헤더 */}
         <div className="text-center mb-12">
           <div className="text-5xl mb-4">☯</div>
           <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-yellow-300 to-amber-400 bg-clip-text text-transparent">
-            사주팔자
+            사.주.팔.자.
           </h1>
-          <p className="text-purple-300 text-lg">생년월일로 알아보는 나의 운명</p>
+          <p className="text-pink-300 text-lg">생년월일로 알아보는 나의 운명은?!?</p>
         </div>
 
         {/* 폼 */}
@@ -76,20 +76,20 @@ export default function Home() {
 
             {/* 이름 */}
             <div>
-              <label className="block text-sm text-purple-300 mb-2">이름</label>
+              <label className="block text-sm text-pink-300 mb-2">이름</label>
               <input
                 type="text"
                 placeholder="이름을 입력하세요"
                 value={form.name}
                 onChange={e => setForm({ ...form, name: e.target.value })}
                 required
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
               />
             </div>
 
             {/* 성별 */}
             <div>
-              <label className="block text-sm text-purple-300 mb-2">성별</label>
+              <label className="block text-sm text-pink-300 mb-2">성별</label>
               <div className="grid grid-cols-2 gap-3">
                 {[{ value: 'male', label: '남성' }, { value: 'female', label: '여성' }].map(g => (
                   <button
@@ -98,7 +98,7 @@ export default function Home() {
                     onClick={() => setForm({ ...form, gender: g.value })}
                     className={`py-3 rounded-xl border transition-all ${
                       form.gender === g.value
-                        ? 'bg-purple-600 border-purple-400 text-white'
+                        ? 'bg-pink-600 border-pink-400 text-white'
                         : 'bg-white/5 border-white/20 text-white/60 hover:border-white/40'
                     }`}
                   >
@@ -110,7 +110,7 @@ export default function Home() {
 
             {/* 생년 */}
             <div>
-              <label className="block text-sm text-purple-300 mb-2">태어난 해</label>
+              <label className="block text-sm text-pink-300 mb-2">태어난 해</label>
               <input
                 type="number"
                 placeholder="예: 1990"
@@ -119,14 +119,14 @@ export default function Home() {
                 value={form.year}
                 onChange={e => setForm({ ...form, year: e.target.value })}
                 required
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
               />
             </div>
 
             {/* 생월/일 */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm text-purple-300 mb-2">월</label>
+                <label className="block text-sm text-pink-300 mb-2">월</label>
                 <input
                   type="number"
                   placeholder="월 (1-12)"
@@ -135,11 +135,11 @@ export default function Home() {
                   value={form.month}
                   onChange={e => setForm({ ...form, month: e.target.value })}
                   required
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                 />
               </div>
               <div>
-                <label className="block text-sm text-purple-300 mb-2">일</label>
+                <label className="block text-sm text-pink-300 mb-2">일</label>
                 <input
                   type="number"
                   placeholder="일 (1-31)"
@@ -148,7 +148,7 @@ export default function Home() {
                   value={form.day}
                   onChange={e => setForm({ ...form, day: e.target.value })}
                   required
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                 />
               </div>
             </div>
@@ -156,7 +156,7 @@ export default function Home() {
             {/* 태어난 시간 */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-sm text-purple-300">태어난 시간</label>
+                <label className="text-sm text-pink-300">태어난 시간</label>
                 <label className="flex items-center gap-2 text-sm text-white/50 cursor-pointer">
                   <input
                     type="checkbox"
@@ -171,7 +171,7 @@ export default function Home() {
                 value={form.hour}
                 onChange={e => setForm({ ...form, hour: e.target.value })}
                 disabled={form.unknownHour}
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-400 disabled:opacity-40"
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-400 disabled:opacity-40"
               >
                 {hours.map(h => (
                   <option key={h.value} value={h.value} className="bg-gray-900">
@@ -186,7 +186,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg transition-all shadow-lg shadow-purple-900/50"
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg transition-all shadow-lg shadow-pink-900/50"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-3">
