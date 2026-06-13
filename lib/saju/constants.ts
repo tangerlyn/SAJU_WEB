@@ -46,7 +46,9 @@ const MONTH_BASE_STEM: Record<number, number> = {
 
 export function getMonthStemIndex(yearStemIndex: number, sajuMonth: number): number {
   const base = MONTH_BASE_STEM[yearStemIndex % 5]
-  return (base + sajuMonth - 1) % 10
+  // 인월(2월)=offset 0, 묘월(3월)=offset 1, ..., 자월(12월)=offset 10, 축월(1월)=offset 11
+  const offset = sajuMonth === 1 ? 11 : sajuMonth - 2
+  return (base + offset) % 10
 }
 
 // 시주 천간 기준표: 일간 인덱스%5 → 자시 천간 인덱스
