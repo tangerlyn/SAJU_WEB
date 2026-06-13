@@ -104,7 +104,7 @@ export default function ResultPage() {
   const router = useRouter()
   const [result, setResult] = useState<StoredResult | null>(null)
   const [saving, setSaving] = useState(false)
-  const [saveMsg, setSaveMsg] = useState('')
+  const [modalImages, setModalImages] = useState<string[]>([])
 
   // 3구역 ref
   const zoneRefs = [
@@ -119,46 +119,43 @@ export default function ResultPage() {
     setResult(JSON.parse(stored))
   }, [router])
 
-  async function captureZone(ref: React.RefObject<HTMLDivElement | null>, filename: string) {
-    if (!ref.current) return
-    const dataUrl = await toPng(ref.current, {
-      cacheBust: true,
-      backgroundColor: '#0a0a0f',
-      pixelRatio: 2,
-    })
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-    if (isIOS) {
-      window.open(dataUrl, '_blank')
-    } else {
-      const link = document.createElement('a')
-      link.download = filename
-      link.href = dataUrl
-      link.click()
-    }
-  }
-
   async function handleSaveImages() {
     if (!result) return
     setSaving(true)
-    setSaveMsg('')
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
     try {
-      const ilju = result.saju.ilju
-      const date = new Date().toLocaleDateString('ko-KR').replace(/\. /g, '-').replace('.', '')
-      for (let i = 0; i < zoneRefs.length; i++) {
-        await captureZone(zoneRefs[i], `사주_${ilju}_${i + 1}of3_${date}.png`)
-        // 이미지 사이 짧은 간격
-        if (i < zoneRefs.length - 1) await new Promise(r => setTimeout(r, 400))
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      const images: string[] = []
+
+      for (const ref of zoneRefs) {
+        if (!ref.current) continue
+        const dataUrl = await toPng(ref.current, {
+          cacheBust: true,
+          backgroundColor: '#0a0a0f',
+          pixelRatio: isIOS ? 1.5 : 2,
+        })
+        images.push(dataUrl)
       }
-      setSaveMsg(isIOS
-        ? '새 탭 3개에서 이미지를 길게 눌러 저장하세요 📱'
-        : '이미지 3장이 저장됐어요 ✓'
-      )
-    } catch {
-      setSaveMsg('저장 중 오류가 발생했어요')
+
+      if (isIOS) {
+        // iOS: 팝업 차단 우회 — 같은 페이지 모달에 이미지 표시
+        setModalImages(images)
+      } else {
+        // Android / 데스크탑: 자동 다운로드
+        const ilju = result.saju.ilju
+        const date = new Date().toLocaleDateString('ko-KR').replace(/\. /g, '-').replace('.', '')
+        for (let i = 0; i < images.length; i++) {
+          const link = document.createElement('a')
+          link.download = `사주_${ilju}_${i + 1}of3_${date}.png`
+          link.href = images[i]
+          link.click()
+          if (i < images.length - 1) await new Promise(r => setTimeout(r, 400))
+        }
+      }
+    } catch (err) {
+      console.error(err)
+      alert('이미지 생성 중 오류가 발생했어요. 스크린샷을 이용해주세요.')
     } finally {
       setSaving(false)
-      setTimeout(() => setSaveMsg(''), 5000)
     }
   }
 
@@ -181,6 +178,41 @@ export default function ResultPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white">
+
+      {/* iOS 이미지 저장 모달 */}
+      {modalImages.length > 0 && (
+        <div className="fixed inset-0 bg-black/95 z-50 overflow-y-auto">
+          <div className="max-w-lg mx-auto px-4 py-8">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <p className="text-white font-bold text-lg">이미지 저장</p>
+                <p className="text-white/50 text-sm mt-0.5">이미지를 길게 눌러 사진 저장 📱</p>
+              </div>
+              <button
+                onClick={() => setModalImages([])}
+                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-white/20"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="space-y-4">
+              {modalImages.map((src, i) => (
+                <div key={i}>
+                  <p className="text-white/30 text-xs mb-2 text-center">{i + 1} / {modalImages.length}</p>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt={`사주 ${i + 1}`} className="w-full rounded-2xl" />
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setModalImages([])}
+              className="w-full mt-6 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-white/60 text-sm"
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ───── 구역 1: 차트 + 섹션 1~4 ───── */}
       <div ref={zoneRefs[0]} className="bg-[#0a0a0f]">
@@ -283,10 +315,10 @@ export default function ResultPage() {
           {saving ? (
             <>
               <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              이미지 생성 중... (3장)
+              이미지 생성 중...
             </>
           ) : (
-            '📸 이미지 3장으로 저장하기'
+            '📸 이미지로 저장하기'
           )}
         </button>
 
