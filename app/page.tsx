@@ -195,8 +195,8 @@ export default function Home() {
               }
               setCareerLoading(true)
               setCareerMsg('직장운 분석 중...')
-              const t1 = setTimeout(() => setCareerMsg('언니만을 위한 직장운 분석 중입니다 🔍'), 8000)
-              const t2 = setTimeout(() => setCareerMsg('돈 많이 벌었으면 좋겠다 💸'), 20000)
+              const t1 = setTimeout(() => setCareerMsg('언니만을 위한 직장운 분석 중입니다 🔍'), 3000)
+              const t2 = setTimeout(() => setCareerMsg('돈 많이 벌었으면 좋겠다 💸'), 6000)
               try {
                 const res = await fetch('/api/career', {
                   method: 'POST',
@@ -231,7 +231,7 @@ export default function Home() {
                 {careerMsg}
               </span>
             ) : (
-              '💼 직장운만 보기'
+              '직장운만 보기'
             )}
           </button>
 
