@@ -23,20 +23,13 @@ const ELEMENT_EMOJI: Record<string, string> = {
 }
 
 const SECTION_META = [
-  { icon: '🌊', label: '오행 분석',    gradient: 'from-sky-50 to-blue-50',         border: 'border-sky-200',    accent: 'text-sky-600' },
-  { icon: '⚡', label: '천간의 장점',  gradient: 'from-yellow-50 to-amber-50',     border: 'border-yellow-200', accent: 'text-amber-600' },
-  { icon: '🔮', label: '천간의 단점',  gradient: 'from-purple-50 to-violet-50',    border: 'border-purple-200', accent: 'text-purple-600' },
-  { icon: '🌟', label: '일주의 의미',  gradient: 'from-amber-50 to-orange-50',     border: 'border-amber-200',  accent: 'text-amber-600' },
-  { icon: '🧬', label: '성격 분석',    gradient: 'from-indigo-50 to-purple-50',    border: 'border-indigo-200', accent: 'text-indigo-600' },
-  { icon: '💎', label: '숨겨진 재능',  gradient: 'from-teal-50 to-cyan-50',        border: 'border-teal-200',   accent: 'text-teal-600' },
-  { icon: '🚀', label: '직업 & 미래',  gradient: 'from-emerald-50 to-teal-50',     border: 'border-emerald-200',accent: 'text-emerald-600' },
-  { icon: '💰', label: '재물운',        gradient: 'from-green-50 to-emerald-50',    border: 'border-green-200',  accent: 'text-green-600' },
-  { icon: '💕', label: '연애/결혼운',  gradient: 'from-pink-50 to-rose-50',        border: 'border-blue-200',   accent: 'text-pink-600' },
-  { icon: '🌿', label: '건강운',        gradient: 'from-lime-50 to-green-50',       border: 'border-lime-200',   accent: 'text-lime-600' },
-  { icon: '🏡', label: '가족운',        gradient: 'from-orange-50 to-amber-50',     border: 'border-orange-200', accent: 'text-orange-600' },
-  { icon: '🤝', label: '귀인',    gradient: 'from-cyan-50 to-sky-50',         border: 'border-cyan-200',   accent: 'text-cyan-600' },
-  { icon: '📅', label: '올해 운세',    gradient: 'from-rose-50 to-pink-50',        border: 'border-rose-200',   accent: 'text-rose-600' },
-  { icon: '🌈', label: '종합 조언',    gradient: 'from-violet-50 to-fuchsia-50',   border: 'border-violet-200', accent: 'text-violet-600' },
+  { icon: '🌊', label: '오행 직업 기질',   gradient: 'from-sky-50 to-blue-50',       border: 'border-sky-200',     accent: 'text-sky-600' },
+  { icon: '🏢', label: '잘 맞는 직장',      gradient: 'from-emerald-50 to-teal-50',   border: 'border-emerald-200', accent: 'text-emerald-600' },
+  { icon: '🚀', label: '직장에서 빛나는 법', gradient: 'from-violet-50 to-indigo-50',  border: 'border-violet-200',  accent: 'text-violet-600' },
+  { icon: '🤝', label: '직장 인간관계',      gradient: 'from-amber-50 to-orange-50',   border: 'border-amber-200',   accent: 'text-amber-600' },
+  { icon: '⏰', label: '취업·이직·승진 적기', gradient: 'from-rose-50 to-pink-50',     border: 'border-rose-200',    accent: 'text-rose-600' },
+  { icon: '📅', label: '2026 직장운 월별',   gradient: 'from-blue-50 to-indigo-50',    border: 'border-blue-200',    accent: 'text-blue-600' },
+  { icon: '🗺️', label: '평생 커리어 로드맵', gradient: 'from-teal-50 to-cyan-50',      border: 'border-teal-200',    accent: 'text-teal-600' },
 ]
 
 function parseSections(reading: string): { title: string; body: string }[] {
@@ -93,7 +86,7 @@ function SectionCard({ sec, i }: { sec: { title: string; body: string }; i: numb
   )
 }
 
-export default function ResultPage() {
+export default function CareerPage() {
   const router = useRouter()
   const [result, setResult] = useState<StoredResult | null>(null)
   const [saving, setSaving] = useState(false)
@@ -102,35 +95,33 @@ export default function ResultPage() {
   const captureRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const stored = sessionStorage.getItem('sajuResult')
+    const stored = sessionStorage.getItem('careerResult')
     if (!stored) { router.push('/'); return }
     setResult(JSON.parse(stored))
   }, [router])
 
-  async function handleSaveImages() {
+  async function handleSave() {
     if (!result || !captureRef.current) return
     setSaving(true)
     try {
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
       const dataUrl = await toPng(captureRef.current, {
         cacheBust: true,
-        backgroundColor: '#f0f7ff',
+        backgroundColor: '#f0fdf4',
         pixelRatio: isIOS ? 1.5 : 2,
       })
-
       if (isIOS) {
         setModalImages([dataUrl])
       } else {
-        const ilju = result.saju.ilju
         const date = new Date().toLocaleDateString('ko-KR').replace(/\. /g, '-').replace('.', '')
         const link = document.createElement('a')
-        link.download = `사주_${ilju}_${date}.png`
+        link.download = `직장운_${result.saju.ilju}_${date}.png`
         link.href = dataUrl
         link.click()
       }
     } catch (err) {
       console.error(err)
-      alert('이미지 생성 중 오류가 발생했어요. 스크린샷을 이용해주세요.')
+      alert('이미지 생성 중 오류가 발생했어요.')
     } finally {
       setSaving(false)
     }
@@ -138,8 +129,8 @@ export default function ResultPage() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-blue-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-blue-300 border-t-blue-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-emerald-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-emerald-300 border-t-emerald-500 rounded-full animate-spin" />
       </div>
     )
   }
@@ -154,9 +145,9 @@ export default function ResultPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 via-sky-50 to-white text-gray-900">
+    <main className="min-h-screen bg-gradient-to-b from-emerald-50 via-teal-50 to-white text-gray-900">
 
-      {/* iOS 이미지 저장 모달 */}
+      {/* iOS 저장 모달 */}
       {modalImages.length > 0 && (
         <div className="fixed inset-0 bg-white/98 z-50 overflow-y-auto">
           <div className="max-w-lg mx-auto px-4 py-8">
@@ -167,22 +158,18 @@ export default function ResultPage() {
               </div>
               <button
                 onClick={() => setModalImages([])}
-                className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 hover:bg-blue-200"
+                className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 hover:bg-emerald-200"
               >
                 ✕
               </button>
             </div>
-            <div className="space-y-4">
-              {modalImages.map((src, i) => (
-                <div key={i}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="사주 풀이" className="w-full rounded-2xl border border-blue-100" />
-                </div>
-              ))}
-            </div>
+            {modalImages.map((src, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={i} src={src} alt="직장운 풀이" className="w-full rounded-2xl border border-emerald-100" />
+            ))}
             <button
               onClick={() => setModalImages([])}
-              className="w-full mt-6 py-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-gray-500 text-sm hover:bg-blue-100"
+              className="w-full mt-6 py-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-gray-500 text-sm hover:bg-emerald-100"
             >
               닫기
             </button>
@@ -190,11 +177,11 @@ export default function ResultPage() {
         </div>
       )}
 
-      {/* ───── 캡처 영역 (전체 결과) ───── */}
-      <div ref={captureRef} className="bg-gradient-to-b from-blue-50 via-sky-50 to-white">
+      {/* ───── 캡처 영역 ───── */}
+      <div ref={captureRef} className="bg-gradient-to-b from-emerald-50 via-teal-50 to-white">
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-200/40 via-sky-100/30 to-transparent pointer-events-none" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-300/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-200/40 via-teal-100/30 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-emerald-300/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-2xl mx-auto px-4 pt-10 pb-6">
             <button
@@ -205,18 +192,21 @@ export default function ResultPage() {
             </button>
 
             <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                💼 직장운 집중 분석
+              </div>
               <p className="text-gray-500 text-sm mb-1">
                 {saju.birthInfo.year}.{saju.birthInfo.month}.{saju.birthInfo.day} ·{' '}
                 {saju.birthInfo.gender === 'male' ? '남' : '여'}
               </p>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-500 bg-clip-text text-transparent">
                 {saju.ilju}
               </h1>
               <p className="text-gray-500 text-sm mt-1">일간 {saju.dayGan} · {saju.day.ganElement}의 기운</p>
             </div>
 
-            {/* 사주팔자 카드 */}
-            <div className="bg-white rounded-3xl p-5 border border-blue-200 shadow-sm mb-4">
+            {/* 사주팔자 + 오행 분포 */}
+            <div className="bg-white rounded-3xl p-5 border border-emerald-200 shadow-sm mb-4">
               <p className="text-center text-xs text-gray-400 mb-4 tracking-widest uppercase">四柱八字</p>
               <div className="grid grid-cols-4 gap-2 mb-5">
                 {pillars.map((p) => (
@@ -233,7 +223,7 @@ export default function ResultPage() {
                   </div>
                 ))}
               </div>
-              <div className="border-t border-blue-100 pt-4">
+              <div className="border-t border-emerald-100 pt-4">
                 <p className="text-[10px] text-gray-400 text-center mb-3 tracking-widest">오행 분포</p>
                 <div className="flex gap-1.5 justify-center flex-wrap">
                   {Object.entries(saju.fiveElements).map(([el, cnt]) => (
@@ -252,7 +242,7 @@ export default function ResultPage() {
           </div>
         </div>
 
-        {/* 전체 섹션 1~14 */}
+        {/* 직장운 섹션 */}
         <div className="max-w-2xl mx-auto px-4 pb-10 space-y-3">
           {sections.map((sec, i) => (
             <SectionCard key={i} sec={sec} i={i} />
@@ -260,12 +250,12 @@ export default function ResultPage() {
         </div>
       </div>
 
-      {/* ───── 하단 버튼 (캡처 제외) ───── */}
+      {/* 하단 버튼 */}
       <div className="max-w-2xl mx-auto px-4 pb-20 space-y-3">
         <button
-          onClick={handleSaveImages}
+          onClick={handleSave}
           disabled={saving}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 border border-blue-300 text-white font-semibold disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-sm shadow-blue-200"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 border border-emerald-300 text-white font-semibold disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-sm shadow-emerald-200"
         >
           {saving ? (
             <>
@@ -279,9 +269,9 @@ export default function ResultPage() {
 
         <button
           onClick={() => router.push('/')}
-          className="w-full py-3.5 rounded-2xl bg-white border border-blue-200 text-gray-500 hover:bg-blue-50 hover:text-gray-700 transition-all text-sm"
+          className="w-full py-3.5 rounded-2xl bg-white border border-emerald-200 text-gray-500 hover:bg-emerald-50 hover:text-gray-700 transition-all text-sm"
         >
-          다른 사람 사주 보기
+          처음으로 돌아가기
         </button>
       </div>
     </main>

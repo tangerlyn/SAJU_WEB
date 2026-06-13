@@ -7,6 +7,7 @@ export default function Home() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [loadingMsg, setLoadingMsg] = useState('사주 분석 중...')
+  const [careerLoading, setCareerLoading] = useState(false)
   const [form, setForm] = useState({
     name: '',
     year: '',
@@ -182,10 +183,55 @@ export default function Home() {
             </div>
           </div>
 
+          {/* 직장운 버튼 */}
+          <button
+            type="button"
+            disabled={careerLoading || loading}
+            onClick={async () => {
+              if (!form.name || !form.year || !form.month || !form.day) {
+                alert('이름, 생년월일을 모두 입력해주세요.')
+                return
+              }
+              setCareerLoading(true)
+              try {
+                const res = await fetch('/api/career', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    name: form.name,
+                    year: Number(form.year),
+                    month: Number(form.month),
+                    day: Number(form.day),
+                    hour: form.unknownHour ? 12 : Number(form.hour),
+                    gender: form.gender,
+                  }),
+                })
+                if (!res.ok) throw new Error('API 오류')
+                const data = await res.json()
+                sessionStorage.setItem('careerResult', JSON.stringify(data))
+                router.push('/career')
+              } catch {
+                alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+              } finally {
+                setCareerLoading(false)
+              }
+            }}
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg text-white transition-all shadow-lg shadow-emerald-200"
+          >
+            {careerLoading ? (
+              <span className="flex items-center justify-center gap-3">
+                <span className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />
+                직장운 분석 중...
+              </span>
+            ) : (
+              '💼 직장운만 보기'
+            )}
+          </button>
+
           {/* 제출 버튼 */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || careerLoading}
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg text-white transition-all shadow-lg shadow-blue-200"
           >
             {loading ? (
