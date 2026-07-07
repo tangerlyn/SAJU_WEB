@@ -9,6 +9,8 @@ export default function Home() {
   const [loadingMsg, setLoadingMsg] = useState('사주 분석 중...')
   const [careerLoading, setCareerLoading] = useState(false)
   const [careerMsg, setCareerMsg] = useState('직장운 분석 중...')
+  const [loveLoading, setLoveLoading] = useState(false)
+  const [loveMsg, setLoveMsg] = useState('연애운 분석 중...')
   const [form, setForm] = useState({
     name: '',
     year: '',
@@ -187,7 +189,7 @@ export default function Home() {
           {/* 직장운 버튼 */}
           <button
             type="button"
-            disabled={careerLoading || loading}
+            disabled={careerLoading || loveLoading || loading}
             onClick={async () => {
               if (!form.name || !form.year || !form.month || !form.day) {
                 alert('이름, 생년월일을 모두 입력해주세요.')
@@ -235,10 +237,61 @@ export default function Home() {
             )}
           </button>
 
+          {/* 연애운 버튼 */}
+          <button
+            type="button"
+            disabled={loveLoading || careerLoading || loading}
+            onClick={async () => {
+              if (!form.name || !form.year || !form.month || !form.day) {
+                alert('이름, 생년월일을 모두 입력해주세요.')
+                return
+              }
+              setLoveLoading(true)
+              setLoveMsg('연애운 분석 중...')
+              const t1 = setTimeout(() => setLoveMsg('설레는 인연을 찾는 중입니다 💘'), 3000)
+              const t2 = setTimeout(() => setLoveMsg('좋은 사랑 하셨으면 좋겠다 💕'), 6000)
+              try {
+                const res = await fetch('/api/love', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    name: form.name,
+                    year: Number(form.year),
+                    month: Number(form.month),
+                    day: Number(form.day),
+                    hour: form.unknownHour ? 12 : Number(form.hour),
+                    gender: form.gender,
+                  }),
+                })
+                if (!res.ok) throw new Error('API 오류')
+                const data = await res.json()
+                sessionStorage.setItem('loveResult', JSON.stringify(data))
+                router.push('/love')
+              } catch {
+                alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+              } finally {
+                clearTimeout(t1)
+                clearTimeout(t2)
+                setLoveLoading(false)
+                setLoveMsg('연애운 분석 중...')
+              }
+            }}
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-400 hover:to-pink-400 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg text-white transition-all shadow-lg shadow-rose-200"
+          >
+            {loveLoading ? (
+              <span className="flex items-center justify-center gap-3">
+                <span className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />
+                {loveMsg}
+              </span>
+            ) : (
+              '연애/결혼운만 보기'
+            )}
+          </button>
+
           {/* 제출 버튼 */}
           <button
             type="submit"
-            disabled={loading || careerLoading}
+            disabled={loading || careerLoading || loveLoading}
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg text-white transition-all shadow-lg shadow-blue-200"
           >
             {loading ? (
