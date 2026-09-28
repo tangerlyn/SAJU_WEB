@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function Home() {
   const router = useRouter()
@@ -304,6 +305,13 @@ export default function Home() {
             )}
           </button>
         </form>
+
+        <Link
+          href="/chat"
+          className="mt-4 block w-full py-4 rounded-2xl border-2 border-blue-300 bg-white hover:bg-blue-50 text-center font-bold text-lg text-blue-600 transition-all"
+        >
+          💬 AI 사주 상담사에게 물어보기
+        </Link>
 
         <p className="text-center text-gray-400 text-xs mt-6">
           시간을 모르면 정오(12시)로 계산됩니다

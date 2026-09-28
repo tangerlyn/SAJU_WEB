@@ -37,7 +37,7 @@ export interface SajuResult {
 }
 
 // 절기 기준 사주 월 계산 (근사값 - 대부분 정확, 절기 당일 ±1일 오차 가능)
-const SOLAR_TERM_DAY: Record<number, number> = {
+export const SOLAR_TERM_DAY: Record<number, number> = {
   1: 6,   // 소한 → 축월 시작
   2: 4,   // 입춘 → 인월 시작
   3: 6,   // 경칩 → 묘월 시작
@@ -53,7 +53,7 @@ const SOLAR_TERM_DAY: Record<number, number> = {
 }
 
 // 월 → 사주 월지 인덱스 (인월=인(2), 묘월=묘(3), ...)
-const MONTH_TO_BRANCH_INDEX: Record<number, number> = {
+export const MONTH_TO_BRANCH_INDEX: Record<number, number> = {
   1: 1,   // 축 (12지지 index 1)
   2: 2,   // 인 (index 2)
   3: 3,   // 묘 (index 3)
@@ -80,14 +80,14 @@ function getSajuMonth(month: number, day: number): number {
 const REF_DATE = new Date(Date.UTC(1900, 0, 1))
 const REF_DAY_INDEX = 10
 
-function getDayIndex(year: number, month: number, day: number): number {
+export function getDayIndex(year: number, month: number, day: number): number {
   const target = new Date(Date.UTC(year, month - 1, day))
   const diffMs = target.getTime() - REF_DATE.getTime()
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
   return ((diffDays + REF_DAY_INDEX) % 60 + 60) % 60
 }
 
-function makePillar(ganIndex: number, jiIndex: number): Pillar {
+export function makePillar(ganIndex: number, jiIndex: number): Pillar {
   const gan = HEAVENLY_STEMS[ganIndex]
   const ji = EARTHLY_BRANCHES[jiIndex]
   return {
