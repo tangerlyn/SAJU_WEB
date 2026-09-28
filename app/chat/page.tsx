@@ -120,6 +120,21 @@ function StepCard({ step }: { step: Step }) {
   )
 }
 
+// 서버가 Gemini 한도로 재시도 대기 중일 수 있어 로딩이 길어져도 멈춰 보이지 않게 문구를 바꿔준다
+const LOADING_TEXTS = {
+  start: ['질문을 살펴보는 중...', '어떤 계산이 필요한지 고르는 중...', '사주 흐름을 짚어보는 중...', '조금만 기다려주세요, 꼼꼼히 보는 중이에요...'],
+  summary: ['결과를 종합하는 중...', '계산 결과를 해석하는 중...', '답변을 정리하는 중...', '조금만 기다려주세요, 꼼꼼히 풀어보는 중이에요...'],
+}
+
+function LoadingText({ phase }: { phase: keyof typeof LOADING_TEXTS }) {
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setI(n => Math.min(n + 1, LOADING_TEXTS[phase].length - 1)), 7000)
+    return () => clearInterval(timer)
+  }, [phase])
+  return <>{LOADING_TEXTS[phase][i]}</>
+}
+
 function Inline({ text }: { text: string }) {
   const parts = text.split(/(\*\*.+?\*\*)/)
   return (
@@ -294,7 +309,7 @@ export default function ChatPage() {
                 {t.pending && !t.content && (
                   <div className="flex items-center gap-2 text-sm text-gray-400">
                     <span className="w-4 h-4 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin" />
-                    {t.steps.length === 0 ? '질문을 살펴보는 중...' : '결과를 종합하는 중...'}
+                    <LoadingText key={t.steps.length} phase={t.steps.length === 0 ? 'start' : 'summary'} />
                   </div>
                 )}
                 {t.error && <p className="text-sm text-rose-500">{t.error}</p>}
